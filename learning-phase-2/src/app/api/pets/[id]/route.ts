@@ -18,9 +18,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 }
 
 // PUT /api/pets/:id
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   // get id from params
-  const id = params.id
+  const { id } = await params
   // get data from request body
   const data = await request.json()
   // update pet record
@@ -34,9 +34,9 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 }
 
 // DELETE /api/pets/:id
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   // get id from params
-  const id = params.id
+  const { id } = await params
   // delete pet record
   await prisma.pet.delete({
     // where id is equal to the id param
