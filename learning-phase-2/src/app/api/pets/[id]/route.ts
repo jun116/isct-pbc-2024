@@ -3,9 +3,9 @@ import { NextResponse } from 'next/server'
 import prisma from '../../../../../lib/prisma'
 
 // GET /api/pets/:id
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   // get id from params
-  const id = params.id
+  const { id } = await params
   // findUnique returns a single pet with owner data
   const pet = await prisma.pet.findUnique({
     // where id is equal to the id param
